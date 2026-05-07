@@ -32,12 +32,16 @@ export const decodeAnimation = async (
     throw new Error("このブラウザは ImageDecoder API に未対応です（最新の Chrome / Edge / Safari / Firefox を使用してください）");
   }
   const type = guessMime(file);
-  const decoder = new (ID as unknown as new (init: { data: ReadableStream<Uint8Array>; type: string }) => {
+  // Use ArrayBuffer so ImageDecoder has the entire file upfront before parsing
+  // frameCount. With file.stream() the tracks.ready promise can resolve before
+  // the GIF is fully buffered, causing frameCount to be 1 for larger GIFs.
+  const arrayBuffer = await file.arrayBuffer();
+  const decoder = new (ID as unknown as new (init: { data: ArrayBuffer; type: string }) => {
     tracks: { ready: Promise<void>; selectedTrack: { frameCount: number; repetitionCount?: number } | null };
     decode: (opts: { frameIndex: number }) => Promise<{ image: VideoFrame }>;
     close: () => void;
   })({
-    data: file.stream(),
+    data: arrayBuffer,
     type,
   });
 
