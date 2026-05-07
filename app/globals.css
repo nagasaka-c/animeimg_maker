@@ -3,24 +3,55 @@
 :root {
   --background: #ffffff;
   --foreground: #171717;
+  --brand-create: #1d4ed8;
+  --brand-create-strong: #1e3a8a;
+  --brand-convert: #dc2626;
+  --brand-convert-strong: #991b1b;
+  --border-soft: #e5e7eb;
+  --muted: #6b7280;
+  --bg-soft: #f9fafb;
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
+  --color-brand-create: var(--brand-create);
+  --color-brand-create-strong: var(--brand-create-strong);
+  --color-brand-convert: var(--brand-convert);
+  --color-brand-convert-strong: var(--brand-convert-strong);
+  --color-border-soft: var(--border-soft);
+  --color-muted: var(--muted);
+  --color-bg-soft: var(--bg-soft);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
-
+html,
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+}
+
+body {
+  font-family: var(--font-sans), -apple-system, "Segoe UI", "Hiragino Sans",
+    "Noto Sans JP", sans-serif;
+}
+
+.scrollbar-auto {
+  scrollbar-gutter: stable;
+}
+
+.scrollbar-auto::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+.scrollbar-auto::-webkit-scrollbar-thumb {
+  background: transparent;
+  border-radius: 9999px;
+}
+
+.scrollbar-auto:hover::-webkit-scrollbar-thumb,
+.scrollbar-auto:focus-within::-webkit-scrollbar-thumb {
+  background: rgba(0, 0, 0, 0.18);
 }
